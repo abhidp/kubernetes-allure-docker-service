@@ -1,5 +1,4 @@
 FROM openjdk:8-jdk-slim
-LABEL maintainer="fescobar.systems@gmail.com"
 
 ARG ALLURE_VERSION=allure-2.7.0
 
