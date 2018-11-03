@@ -1,26 +1,26 @@
 FROM openjdk:8-jdk-slim
 
-ARG ALLURE_VERSION=allure-2.7.0
+ARG RELEASE=2.7.0
 
 RUN apt-get update
+RUN apt-get install curl -y
 RUN apt-get install tar
 RUN apt-get install vim -y
 RUN apt install python-pip -y
 RUN pip install Flask
-RUN apt-get install curl -y
 RUN apt-get install --reinstall procps -y
+RUN apt-get install wget
 
 RUN rm /etc/java-8-openjdk/accessibility.properties
 RUN touch /etc/java-8-openjdk/accessibility.properties
 
-COPY $ALLURE_VERSION.tgz /
-RUN tar -xvf $ALLURE_VERSION.tgz
-RUN chmod -R +x /$ALLURE_VERSION/bin
+RUN wget --no-verbose -O /tmp/allure-$RELEASE.zip https://github.com/allure-framework/allure2/releases/download/$RELEASE/allure-$RELEASE.zip \
+  && unzip /tmp/allure-$RELEASE.zip -d /
 
 COPY allure-docker-api /app/allure-docker-api
 
-ENV ALLURE_HOME=/$ALLURE_VERSION
-ENV PATH=$PATH:$ALLURE_HOME/bin
+ENV ALLURE_HOME=/allure-$RELEASE
+ENV PATH=$PATH:allure-$RELEASE/bin
 ENV RESULTS_DIRECTORY=/app/allure-results
 ENV REPORT_DIRECTORY=/app/allure-report
 RUN allure --version
