@@ -31,10 +31,10 @@ ENV REPORT_DIRECTORY=/app/allure-report
 RUN allure --version
 
 WORKDIR /app
-ADD runAllure.sh /app
-ADD generateAllureReport.sh /app
-ADD checkAllureResultsFiles.sh /app
-ADD runAllureAPI.sh /app
+ADD scripts/runAllure.sh /app
+ADD scripts/generateAllureReport.sh /app
+ADD scripts/checkAllureResultsFiles.sh /app
+ADD scripts/runAllureAPI.sh /app
 RUN mkdir $RESULTS_DIRECTORY
 RUN mkdir $REPORT_DIRECTORY
 
