@@ -37,6 +37,7 @@ ADD scripts/checkAllureResultsFiles.sh /app
 ADD scripts/runAllureAPI.sh /app
 RUN mkdir $RESULTS_DIRECTORY
 RUN mkdir $REPORT_DIRECTORY
+RUN mkdir $REPORT_DIRECTORY/history
 
 VOLUME [ "$RESULTS_DIRECTORY" ]
 
