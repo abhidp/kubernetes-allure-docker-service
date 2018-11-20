@@ -13,14 +13,15 @@ else
 	SECONDS_TO_WAIT=1
 fi
 
-echo "Checking Allure Results every $SECONDS_TO_WAIT second/s"
+echo "Checking Test Results every $SECONDS_TO_WAIT second(s)"
 
 while :
 do
 	FILES="$(echo $(ls $RESULTS_DIRECTORY -l --time-style=full-iso) | md5sum)"
 	if [ "$FILES" != "$PREV_FILES" ]; then
 		export env PREV_FILES=$FILES
-		echo "Detecting new results..."
+		echo "New Test Results detected"
+		echo "Generating new Test Report..."
 		/app/generateAllureReport.sh
 	fi
 	sleep $SECONDS_TO_WAIT
