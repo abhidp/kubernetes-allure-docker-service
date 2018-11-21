@@ -1,4 +1,4 @@
 #!/bin/bash
 echo "Generating report"
-cp -R allure-report/history/* allure-results/history/
+cp -R $REPORT_DIRECTORY/history/* $RESULTS_DIRECTORY/history/
 allure generate --clean
