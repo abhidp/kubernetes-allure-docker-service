@@ -21,7 +21,7 @@ spec:
           persistentVolumeClaim:
             claimName: test-report
       containers:
-        - image: massiveinteractive/qa-report:v181205-005657
+        - image: massiveinteractive/qa-report
           name: qa-report
           volumeMounts:
             - mountPath: /app/allure-results
