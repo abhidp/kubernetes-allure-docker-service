@@ -1,0 +1,46 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: qa-report
+  labels:
+    app: qa-report
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: qa-report
+  template:
+    metadata:
+      labels:
+        app: qa-report
+      annotations:
+        sidecar.istio.io/inject: "false"
+    spec:
+      volumes:
+        - name: qa-report
+          persistentVolumeClaim:
+            claimName: test-report
+      containers:
+        - image: massiveinteractive/qa-report:v181205-005657
+          name: qa-report
+          volumeMounts:
+            - mountPath: /app/allure-results
+              name: qa-report
+          ports:
+            - containerPort: 4040
+            - containerPort: 5050
+          env:
+            - name: CHECK_RESULTS_EVERY_SECONDS
+              value: "60"
+            - name: TIMEZONE
+              value: "Australia/Sydney"
+          resources:
+            requests:
+              memory: "1Gi"
+              cpu: ".4"
+            limits:
+              memory: "1Gi"
+              cpu: ".4"
+      imagePullSecrets:
+        - name: hs-index-docker-io-v2-autobuilder-hs
+      terminationGracePeriodSeconds: 5

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: qa-report
+  labels:
+    app: qa-report
+spec:
+  ports:
+    - port: 4040
+      targetPort: 4040
+      name: port0
+      protocol: TCP
+  selector:
+    app: qa-report
+  type: LoadBalancer
+  sessionAffinity: None
