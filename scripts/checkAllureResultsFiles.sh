@@ -11,7 +11,12 @@ if echo $CHECK_RESULTS_EVERY_SECONDS | egrep -q '^[0-9]+$'; then
 else
 	echo "Configuration by default"
 	SECONDS_TO_WAIT=1
-	TIMEZONE=Australia/Sydney
+fi
+
+if [ -z ${TIMEZONE+x} ]; then 
+	echo "Using UTC TIMEZONE"; 
+else 
+  echo "TIMEZONE is set to "$TIMEZONE; 
 fi
 
 echo "Checking Test Results every $SECONDS_TO_WAIT second(s)"
@@ -21,6 +26,7 @@ do
 	FILES="$(echo $(ls $RESULTS_DIRECTORY -l --time-style=full-iso) | md5sum)"
 	if [ "$FILES" != "$PREV_FILES" ]; then
 		export env PREV_FILES=$FILES
+		echo " "
 		echo $(TZ=$TIMEZONE date) " New Test Results detected"
 		/app/generateAllureReport.sh
 	fi
