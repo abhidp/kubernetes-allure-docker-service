@@ -15,9 +15,9 @@ else
 fi
 
 if [ -z ${TIMEZONE+x} ]; then 
-	echo "Using UTC TIMEZONE"; 
+	echo "Using UTC Timezone"; 
 else 
-  echo "TIMEZONE is set to "$TIMEZONE; 
+  echo "Timezone is set to "$TIMEZONE; 
 fi
 
 
@@ -27,7 +27,7 @@ do
 	if [ "$FILES" != "$PREV_FILES" ]; then
 		export env PREV_FILES=$FILES
 		echo " "
-		echo "======================================================="
+		echo "============================================================"
 		echo $(TZ=$TIMEZONE date) " New Test Results detected"
 		/app/generateAllureReport.sh
 	fi
