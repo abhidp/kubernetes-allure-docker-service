@@ -38,7 +38,7 @@ ADD scripts/runAllureAPI.sh /app
 RUN mkdir $RESULTS_DIRECTORY
 RUN mkdir $REPORT_DIRECTORY
 RUN mkdir $REPORT_DIRECTORY/history
-RUN mktemp $REPORT_DIRECTORY/history/foo.bar
+RUN mktemp $REPORT_DIRECTORY/history/foobar.XXXXXX
 
 # VOLUME [ "$RESULTS_DIRECTORY" ]
 
