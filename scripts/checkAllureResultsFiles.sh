@@ -8,6 +8,7 @@ fi
 if echo $CHECK_RESULTS_EVERY_SECONDS | egrep -q '^[0-9]+$'; then
 	echo "Overriding configuration"
 	SECONDS_TO_WAIT=$CHECK_RESULTS_EVERY_SECONDS
+	echo "Checking Test Results every $SECONDS_TO_WAIT second(s)"
 else
 	echo "Configuration by default"
 	SECONDS_TO_WAIT=1
@@ -19,7 +20,6 @@ else
   echo "TIMEZONE is set to "$TIMEZONE; 
 fi
 
-echo "Checking Test Results every $SECONDS_TO_WAIT second(s)"
 
 while :
 do
@@ -27,6 +27,7 @@ do
 	if [ "$FILES" != "$PREV_FILES" ]; then
 		export env PREV_FILES=$FILES
 		echo " "
+		echo "======================================================="
 		echo $(TZ=$TIMEZONE date) " New Test Results detected"
 		/app/generateAllureReport.sh
 	fi
