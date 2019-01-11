@@ -30,15 +30,29 @@ ENV RESULTS_DIRECTORY=/app/allure-results
 ENV REPORT_DIRECTORY=/app/allure-report
 RUN allure --version
 
-# RUN mkdir $RESULTS_DIRECTORY
-# RUN mkdir $REPORT_DIRECTORY
-# RUN mkdir $REPORT_DIRECTORY/history
-# RUN mktemp $REPORT_DIRECTORY/history/foobar.XXXXXX
+RUN adduser --disabled-password --gecos '' newuser \
+  && adduser newuser sudo \
+  && echo '%sudo ALL=(ALL:ALL) ALL' >> /etc/sudoers
+
+RUN mkdir -p $RESULTS_DIRECTORY
+RUN mkdir -p $REPORT_DIRECTORY
+RUN mkdir -p $REPORT_DIRECTORY/history
+RUN mktemp -p $REPORT_DIRECTORY/history/foobar.XXXXXX
+
+RUN chown newuser $RESULTS_DIRECTORY
+RUN chown newuser $REPORT_DIRECTORY
+RUN chown newuser $REPORT_DIRECTORY/history
+RUN chown newuser $REPORT_DIRECTORY/history/foobar.XXXXXX
+
+USER newuser
+
 ADD scripts/createFolder.sh /app
 ADD scripts/runAllure.sh /app
 ADD scripts/generateAllureReport.sh /app
 ADD scripts/checkAllureResultsFiles.sh /app
 ADD scripts/runAllureAPI.sh /app
+
+
 
 # VOLUME [ "$RESULTS_DIRECTORY" ]
 
@@ -46,11 +60,9 @@ ENV PORT=4040
 EXPOSE $PORT
 EXPOSE 5050
 
-# RUN adduser --disabled-password --gecos '' newuser \
-#   && adduser newuser sudo \
-#   && echo '%sudo ALL=(ALL:ALL) ALL' >> /etc/sudoers
+
 
 WORKDIR /app
 
-CMD /app/createFolder.sh & /app/runAllure.sh & /app/runAllureAPI.sh & /app/checkAllureResultsFiles.sh
+CMD /app/runAllure.sh & /app/runAllureAPI.sh & /app/checkAllureResultsFiles.sh
 # CMD runAllure.sh & runAllureAPI.sh & checkAllureResultsFiles.sh
