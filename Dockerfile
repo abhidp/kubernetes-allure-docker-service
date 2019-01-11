@@ -37,12 +37,11 @@ RUN adduser --disabled-password --gecos '' newuser \
 RUN mkdir -p $RESULTS_DIRECTORY
 RUN mkdir -p $REPORT_DIRECTORY
 RUN mkdir -p $REPORT_DIRECTORY/history
-RUN mktemp -p $REPORT_DIRECTORY/history/foobar.XXXXXX
+RUN mktemp -p $REPORT_DIRECTORY/history
 
 RUN chown newuser $RESULTS_DIRECTORY
 RUN chown newuser $REPORT_DIRECTORY
 RUN chown newuser $REPORT_DIRECTORY/history
-RUN chown newuser $REPORT_DIRECTORY/history/foobar.XXXXXX
 
 USER newuser
 
