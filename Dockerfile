@@ -61,7 +61,7 @@ EXPOSE 5050
 
 
 WORKDIR /app
-ENTRYPOINT [ "/bin/bash" ]
+# ENTRYPOINT [ "/bin/bash" ]
 
-# CMD /app/runAllure.sh & /app/runAllureAPI.sh & /app/checkAllureResultsFiles.sh
+CMD /app/runAllure.sh & /app/runAllureAPI.sh & /app/checkAllureResultsFiles.sh
 # CMD runAllure.sh & runAllureAPI.sh & checkAllureResultsFiles.sh
