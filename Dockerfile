@@ -63,5 +63,5 @@ EXPOSE 5050
 
 WORKDIR /app
 
-CMD newuser /app/runAllure.sh & /app/runAllureAPI.sh & /app/checkAllureResultsFiles.sh
+CMD newuser /app/runAllure.sh & newuser /app/runAllureAPI.sh & newuser /app/checkAllureResultsFiles.sh
 # CMD runAllure.sh & runAllureAPI.sh & checkAllureResultsFiles.sh
